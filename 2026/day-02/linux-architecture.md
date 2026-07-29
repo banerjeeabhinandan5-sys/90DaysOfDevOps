@@ -1,41 +1,74 @@
-Linux Architecture Notes
-1. Core Components of Linux
-Kernel
-The core of the Linux operating system.
-Manages CPU, memory, storage, devices, and processes.
-Acts as a bridge between hardware and applications.
-User Space
-Where user applications and commands run.
-Examples: Bash shell, web servers, text editors, and scripts.
-Programs request kernel services using system calls.
-init / systemd
-The first process started by the kernel (PID 1).
-Initializes the system during boot.
-Starts and manages services like networking, SSH, and databases.
-2. Process Creation and Management
-Every running program is a process with a unique PID (Process ID).
-New processes are usually created using fork(), then replaced with a new program using exec().
-The kernel schedules processes and allocates CPU time.
-A parent process can create child processes and wait for them to finish.
-Common Process States
-Running (R): Currently using the CPU or ready to run.
-Sleeping (S): Waiting for an event (e.g., user input or disk I/O).
-Stopped (T): Paused by a signal or debugger.
-Zombie (Z): Process has finished but its parent has not collected its exit status.
-Uninterruptible Sleep (D): Waiting for hardware or disk operations.
-3. What systemd Does
-Boots the system and starts essential services.
-Manages background services (daemons).
-Automatically restarts failed services (if configured).
-Tracks service logs using journalctl.
-Controls service startup order using dependencies.
-Why It Matters
-Simplifies service management.
-Makes system boot faster and more reliable.
-Essential for troubleshooting service failures in DevOps.
-4. Five Commands Used Daily
-ps – View running processes.
-top – Monitor CPU and memory usage in real time.
-systemctl – Start, stop, and check services.
-journalctl – View system and service logs.
-kill – Stop or terminate a process.
+# Linux Architecture
+
+## Core Components of Linux
+
+### Kernel
+- Core of the Linux operating system.
+- Manages CPU, memory, processes, file systems, and hardware devices.
+- Provides system calls that allow applications to communicate with hardware.
+
+### User Space
+- The area where user applications and services run.
+- Examples: Bash shell, web servers, text editors, and scripts.
+- Applications interact with the kernel through system calls.
+
+### init / systemd
+- The first process started by the kernel (**PID 1**).
+- Initializes the system during boot.
+- Starts, stops, and manages system services and background processes.
+
+---
+
+## Process Creation and Management
+
+- A **process** is a running instance of a program.
+- Every process has a unique **PID (Process ID)**.
+- Processes are typically created using:
+  1. **fork()** – Creates a copy of the parent process.
+  2. **exec()** – Replaces the child process with a new program.
+- The Linux kernel schedules processes and allocates CPU time.
+
+### Process States
+- **Running (R)** – Process is executing or ready to execute.
+- **Sleeping (S)** – Waiting for an event such as user input or disk I/O.
+- **Stopped (T)** – Process has been paused by a signal or debugger.
+- **Zombie (Z)** – Process has finished execution but still has an entry in the process table because its parent hasn't collected its exit status.
+- **Uninterruptible Sleep (D)** – Waiting for hardware or disk operations.
+
+---
+
+## What systemd Does
+
+- Starts the operating system during boot.
+- Manages system services and daemons.
+- Automatically restarts failed services (when configured).
+- Maintains service logs through `journalctl`.
+- Handles service dependencies and startup order.
+
+### Why systemd Matters
+- Simplifies service management.
+- Improves boot performance.
+- Makes troubleshooting easier.
+- Widely used across modern Linux distributions.
+
+---
+
+## 5 Daily Linux Commands
+
+| Command | Purpose |
+|---------|---------|
+| `ps` | Display running processes |
+| `top` | Monitor CPU and memory usage in real time |
+| `systemctl` | Manage system services |
+| `journalctl` | View system and service logs |
+| `kill` | Terminate a process |
+
+---
+
+## Summary
+
+- **Kernel** manages hardware and system resources.
+- **User Space** is where applications and users interact with the system.
+- **systemd** is the init system responsible for booting and managing services.
+- Linux creates processes using **fork()** and **exec()**.
+- Understanding processes and `systemd` is essential for Linux administration and DevOps troubleshooting.
