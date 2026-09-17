@@ -1,1 +1,32 @@
+name: Day 42 - GitHub-Hosted Runners
 
+on: push
+
+jobs:
+  ubuntu-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print info
+        run: |
+          echo "OS: $(uname -a)"
+          echo "Hostname: $(hostname)"
+          echo "User: $(whoami)"
+
+  windows-job:
+    runs-on: windows-latest
+    steps:
+      - name: Print info
+        run: |
+          echo "OS: $env:OS"
+          echo "Hostname: $env:COMPUTERNAME"
+          echo "User: $env:USERNAME"
+        shell: pwsh
+
+  macos-job:
+    runs-on: macos-latest
+    steps:
+      - name: Print info
+        run: |
+          echo "OS: $(sw_vers)"
+          echo "Hostname: $(hostname)"
+          echo "User: $(whoami)"
