@@ -1,0 +1,22 @@
+name: Upload Artifact Demo
+
+on: push
+
+jobs:
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate a report/log file
+        run: |
+          echo "Test Report" > test-report.txt
+          echo "Run date: $(date)" >> test-report.txt
+          echo "Status: PASSED" >> test-report.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-report.txt
